@@ -1,7 +1,7 @@
 #!/bin/sh
 # Clone dotfiles in to workspace
 mkdir -p $HOME/workspace
-git clone https://github.com/[your_name]/dotfiles.git $HOME/workspace/dotfiles
+git clone https://github.com/nhulongctk35/dotfiles.git $HOME/workspace/dotfiles
 cd $HOME/workspace/dotfiles
 
 # Restore runtime config
