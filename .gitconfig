@@ -1,0 +1,12 @@
+[user]
+	name = Long Tran
+	email = nhulongctk10@gmail.com
+[alias]
+	co = checkout
+	br = branch
+	ci = commit
+	st = status
+	fu = fetch
+	ru = rebase
+	clean = clean
+	fu = fetch
