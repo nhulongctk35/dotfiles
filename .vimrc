@@ -1,118 +1,81 @@
-" Use Vim settings, rather then Vi settings (much better!).
-" This must be first, because it changes other options as a side effect.
-set nocompatible
+set nocompatible              " be iMproved, required
+filetype off                  " required
 
-" TODO: this may not be in the correct place. It is intended to allow overriding <Leader>.
-" source ~/.vimrc.before if it exists.
-if filereadable(expand("~/.vimrc.before"))
-  source ~/.vimrc.before
-endif
+""""""""""""""
+""" LEADER
+""""""""""""""
 
-" ================ General Config ====================
+" Set leader before loading all plugins
+let mapleader = ","
 
-set number                      "Line numbers are good
-set backspace=indent,eol,start  "Allow backspace in insert mode
-set history=1000                "Store lots of :cmdline history
-set showcmd                     "Show incomplete cmds down the bottom
-set showmode                    "Show current mode down the bottom
-set gcr=a:blinkon0              "Disable cursor blink
-set visualbell                  "No sounds
-set autoread                    "Reload files changed outside vim
+" General leader map
+nnoremap <leader>v <C-w>v<C-w>l " Split, then move to the split
+nnoremap <leader>n :bnext<cr> " Next buffer
+nnoremap <leader>p :bprev<cr> " Previous buffer
+noremap <leader>/ :nohlsearch<cr> " Clear search highlight
 
-" This makes vim act like all other editors, buffers can
-" exist in the background without being in a window.
-" http://items.sjbach.com/319/configuring-vim-right
-set hidden
+" Specify a directory for plugins
+" - For Neovim: ~/.local/share/nvim/plugged
+" - Avoid using standard Vim directory names like 'plugin'
+call plug#begin('~/.vim/plugged')
 
-"turn on syntax highlighting
-syntax on
+Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
 
-" Change leader to a comma because the backslash is too far away
-" That means all \x commands turn into ,x
-" The mapleader has to be set before vundle starts loading all
-" the plugins.
-let mapleader=","
+Plug 'https://github.com/pangloss/vim-javascript.git'
+Plug 'https://github.com/MaxMEllon/vim-jsx-pretty.git'
+Plug 'prettier/vim-prettier', { 'do': 'yarn install' }
+Plug 'https://github.com/tpope/vim-surround.git'
+Plug 'https://github.com/vim-airline/vim-airline.git'
 
-" =============== Vundle Initialization ===============
-" This loads all the plugins specified in ~/.vim/vundles.vim
-" Use Vundle plugin to manage all other plugins
-if filereadable(expand("~/.vim/vundles.vim"))
-  source ~/.vim/vundles.vim
-endif
-au BufNewFile,BufRead *.vundle set filetype=vim
+" If installed using git
+Plug '~/.fzf'
+" Initialize plugin system
+call plug#end()
 
-" ================ Turn Off Swap Files ==============
+" Save file with leader + s
+nnoremap <leader>s :w<cr>
+inoremap <leader>s <C-c>:w<cr>
 
-set noswapfile
-set nobackup
-set nowb
+autocmd vimenter * NERDTree
 
-" ================ Persistent Undo ==================
-" Keep undo history across sessions, by storing in file.
-" Only works all the time.
-if has('persistent_undo') && isdirectory(expand('~').'/.vim/backups')
-  silent !mkdir ~/.vim/backups > /dev/null 2>&1
-  set undodir=~/.vim/backups
-  set undofile
-endif
+" NerdTree
+let NERDTreeShowHidden = 1
+let NERDTreeIgnore = ['.pyc$', 'node_modules', '\.git']
+let NERDTreeQuitOnOpen = 1
+let NERDTreeMinimalUI = 1
+let NERDTreeBookmarksFile = $HOME.'/.vim/.NERDTreeBookmarks'
+let NERDTreeMapUpdir = 'h'
+let NERDTreeMapChangeRoot = 'l'
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif " Close vim if there is only nerdtree
+nnoremap <C-f> :NERDTreeToggle<cr>
 
-" ================ Indentation ======================
+"""""""""""""""
+""" GENERAL
+"""""""""""""""
+set nowrap
+
+set number
+set relativenumber
+
+" Search
+set hlsearch
+set ignorecase
+set smartcase
+set incsearch
+set showmatch
 
 set autoindent
-set smartindent
-set smarttab
+set tabstop=2
 set shiftwidth=2
 set softtabstop=2
-set tabstop=2
 set expandtab
 
-" Auto indent pasted text
-nnoremap p p=`]<C-o>
-nnoremap P P=`]<C-o>
+" Keep n lines off the edges of the screen when scrolling
+set scrolloff=5
 
-filetype plugin on
-filetype indent on
-
-" Display tabs and trailing spaces visually
-set list listchars=tab:\ \ ,trail:·
-
-set nowrap       "Don't wrap lines
-set linebreak    "Wrap lines at convenient points
-
-" ================ Folds ============================
-
-set foldmethod=indent   "fold based on indent
-set foldnestmax=3       "deepest fold is 3 levels
-set nofoldenable        "dont fold by default
-
-" ================ Completion =======================
-
-set wildmode=list:longest
-set wildmenu                "enable ctrl-n and ctrl-p to scroll thru matches
-set wildignore=*.o,*.obj,*~ "stuff to ignore when tab completing
-set wildignore+=*vim/backups*
-set wildignore+=*sass-cache*
-set wildignore+=*DS_Store*
-set wildignore+=vendor/rails/**
-set wildignore+=vendor/cache/**
-set wildignore+=*.gem
-set wildignore+=log/**
-set wildignore+=tmp/**
-set wildignore+=*.png,*.jpg,*.gif
-
-" ================ Scrolling ========================
-
-set scrolloff=8         "Start scrolling when we're 8 lines away from margins
-set sidescrolloff=15
-set sidescroll=1
-
-" ================ Search ===========================
-
-set incsearch       " Find the next match as we type the search
-set hlsearch        " Highlight searches by default
-set ignorecase      " Ignore case when searching...
-set smartcase       " ...unless we type a capital
-
-" ================ Custom Settings ========================
-so ~/.yadr/vim/settings.vim
+" Fast moving
+nnoremap <C-h> <C-w>h
+nnoremap <C-j> <C-w>j
+nnoremap <C-k> <C-w>k
+nnoremap <C-l> <C-w>l
 
