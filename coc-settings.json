@@ -1,0 +1,38 @@
+{
+  "suggest.echodocSupport": true,
+  "suggest.maxCompleteItemCount": 20,
+  "coc.preferences.formatOnSaveFiletypes": [
+    "javascript",
+    "typescript",
+    "typescriptreact",
+    "json",
+    "javascriptreact",
+    "typescript.tsx",
+    "css",
+    "scss",
+    "handlebars"
+  ],
+  "eslint.filetypes": [
+    "javascript",
+    "typescript",
+    "typescriptreact",
+    "javascriptreact",
+    "typescript.tsx"
+  ],
+  "diagnostic.errorSign": "¥",
+  "diagnostic.warningSign": "¥",
+  "diagnostic.infoSign": "¥",
+  "html.enable": true,
+  "html.format.enable": true,
+  "html.filetypes": [ "html", "handlebars", "htmldjango" ],
+  "tsserver.log": "verbose",
+  "tsserver.enableJavascript": true,
+  "tsserver.npm": "/usr/local/bin/npm",
+  "languageserver": {
+    "dockerfile": {
+      "command": "docker-langserver",
+      "filetypes": ["dockerfile"],
+      "args": ["--stdio"]
+    }
+  }
+}
